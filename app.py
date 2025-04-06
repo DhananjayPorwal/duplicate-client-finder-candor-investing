@@ -7,7 +7,7 @@ from utils.data_processing import process_files, clean_data
 # Streamlit Configuration
     
 st.set_page_config(page_title="PAN Number Matching App", page_icon="logox.png", menu_items={
-        'Get Help': 'https://github.com/DhananjayPorwal/xml-to-pdf-converter-candor-investing/blob/main/README.md',
+        'Get Help': 'https://github.com/DhananjayPorwal/duplicate-client-finder-candor-investing/blob/main/README.md',
         'Report a bug': "mailto:dporwal985@gmail.com",
         'About': "### Created by [Candor Investing](https://www.candorinvesting.com/)"
     }, layout="wide")
