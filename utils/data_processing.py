@@ -19,8 +19,10 @@ def clean_data(df, source):
     if "PAN" not in df.columns:
         raise KeyError(f"No PAN column found in {source} data. Columns found: {df.columns.tolist()}")
     
-    # Strip whitespace from all columns to avoid issues
-    df = df.applymap(lambda x: x.strip() if isinstance(x, str) else x)
+    # Strip whitespace from string columns to avoid issues across pandas versions.
+    string_columns = df.select_dtypes(include=["object", "string"]).columns
+    for column in string_columns:
+        df[column] = df[column].apply(lambda x: x.strip() if isinstance(x, str) else x)
 
     # Replace empty strings with NaN to handle them as missing values
     df.replace("", float('nan'), inplace=True)
