@@ -39,9 +39,9 @@ def main():
     with col1:
         ria_file = st.file_uploader("📂 Upload RIA Excel File", type=["xlsx"])
     with col2:
-        mf_file = st.file_uploader("📂 Upload Mutual Funds CSV File", type=["csv"])
+        mf_file = st.file_uploader("📂 Upload Mutual Funds Excel or CSV File", type=["csv", "xlsx", "xls"])
     with col3:
-        sc_file = st.file_uploader("📂 Upload Smallcase CSV File", type=["csv"])
+        sc_file = st.file_uploader("📂 Upload Smallcase Excel or CSV File", type=["csv", "xlsx", "xls"])
     
     valid_files = {}
     uploaded_files = {"RIA": ria_file, "Mutual Funds": mf_file, "Smallcase": sc_file}
@@ -49,10 +49,13 @@ def main():
     for name, file in uploaded_files.items():
         if file:
             try:
-                if name == "RIA":
+                file_name = file.name.lower()
+                if file_name.endswith((".xlsx", ".xls")):
                     df = pd.read_excel(file)
-                else:
+                elif file_name.endswith(".csv"):
                     df = pd.read_csv(file)
+                else:
+                    raise ValueError("Unsupported file format. Please upload a CSV or Excel file.")
                 df = clean_data(df, name)
                 valid_files[name] = df
             except Exception as e:
